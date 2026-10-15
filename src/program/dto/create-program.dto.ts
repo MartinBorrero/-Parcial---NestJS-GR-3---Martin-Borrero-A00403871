@@ -7,12 +7,12 @@ import { ApiProperty } from "@nestjs/swagger";
 //   - credits: entero positivo
 export class CreateProgramDto {
 
-    @ApiProperty({ example: "Ingenieria de Sistemas", description: "Program's name (must be unique)", minLength: 3 })
+    @ApiProperty({ example: "Ingenieria de Sistemas", description: "Program's name (unique)", minLength: 3 })
     @IsString()
     @MinLength(3)
     name: string;
 
-    @ApiProperty({ example: "SIS", description: "Program's code, 3 to 6 uppercase letters (must be unique)" })
+    @ApiProperty({ example: "SIS", description: "Program's code, 3 to 6 uppercase letters (unique)" })
     @IsString()
     @Matches(/^[A-Z]{3,6}$/)
     code: string;

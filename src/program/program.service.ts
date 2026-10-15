@@ -1,13 +1,32 @@
 import { Injectable } from '@nestjs/common';
+import { Program } from './entities/program.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
+import { CreateProgramDto } from './dto/create-program.dto';
 
 @Injectable()
 export class ProgramService {
 
     // TODO Reto 1: inyecta el repositorio de Program (y lo que necesites para las transacciones)
-
+     constructor(
+        @InjectRepository(Program)
+        private readonly programRepository: Repository<Program>,
+        private datasource: DataSource
+    ){}
     // TODO Reto 1: create(createProgramDto, user) -> guarda el programa
     //   - nombre o código repetido -> 409 Conflict (no 500)
-
+    async create(createProgramDto: CreateProgramDto, user: User){
+        try{
+            const program = this.programRepository.create({
+                ...createProgramDto,
+                createdBy: user
+            });
+            await this.programRepository.save(program);
+            return program;
+        }catch(error){
+            this.handleException(error);
+        }
+    }
     // TODO Reto 1: findAll(paginationDto) -> lista paginada (limit / skip)
 
     // TODO Reto 2: findOne(id) -> programa con sus estudiantes, 404 si no existe
