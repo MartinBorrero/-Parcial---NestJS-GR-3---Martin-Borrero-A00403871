@@ -1,27 +1,26 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Grades } from "./grades.entity";
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiHideProperty, ApiProperty } from "@nestjs/swagger";
 import { Program } from "../../program/entities/program.entity";
-
 
 @Entity()
 export class Student {
 
 
     @ApiProperty({
-        example: "4fcfc5ab-7902-478f-b173-b8f1e751af12",
+        example:"4fcfc5ab-7902-478f-b173-b8f1e751af12",
         description: "Student id (UUID)",
         format: "uuid"
     })
     @PrimaryGeneratedColumn("uuid")
-    id: string;
+    id:string;
 
     @ApiProperty({
         example: "Gus Gonzalez",
         description: "Student's name"
     })
     @Column("text")
-    name: string;
+    name:string;
 
     @ApiProperty({
         example: 21,
@@ -32,7 +31,7 @@ export class Student {
         type: "int",
         nullable: true
     })
-    age: number;
+    age:number;
 
     @ApiProperty({
         example: "gus@example.com",
@@ -43,7 +42,7 @@ export class Student {
         type: "text",
         unique: true
     })
-    email: string;
+    email:string;
 
     @ApiProperty({
         example: true,
@@ -69,7 +68,7 @@ export class Student {
         type: "text",
         array: true
     })
-    favoriteSubjects: string[];
+    favoriteSubjects:string[];
 
     @ApiProperty({
         example: "gus_gonzalez21",
@@ -84,9 +83,9 @@ export class Student {
         required: false
     })
     @OneToMany(
-        () => Grades,
+        ()=> Grades,
         (grade) => grade.student,
-        { cascade: true, eager: true }
+        {cascade: true, eager: true}
     )
     grades?: Grades[]
 
@@ -98,23 +97,23 @@ export class Student {
         (program) => program.students,
         { nullable: true, onDelete: "SET NULL" }
     )
-
     program?: Program;
+
     @BeforeInsert()
-    checkNicknameInsert() {
-        if (!this.nickname) {
+    checkNicknameInsert(){
+        if(!this.nickname){
             this.nickname = this.name
         }
         this.nickname = this.nickname.toLowerCase()
-            .replaceAll(" ", "_")
-            + this.age
+                        .replaceAll(" ","_")
+                        +this.age
     }
 
     @BeforeUpdate()
-    checkNicknameUpdate() {
+    checkNicknameUpdate(){
         this.nickname = this.nickname.toLowerCase()
-            .replaceAll(" ", "_")
-            + this.age
+                        .replaceAll(" ","_")
+                        +this.age
     }
 
 }
