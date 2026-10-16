@@ -18,6 +18,8 @@ export class Student {
     @ApiProperty({
         example: "Gus Gonzalez",
         description: "Student's name"
+
+        
     })
     @Column("text")
     name:string;
