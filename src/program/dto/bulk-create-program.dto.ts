@@ -10,7 +10,7 @@ import { CreateProgramDto } from "./create-program.dto";
 export class BulkCreateProgramDto {
 
     @ApiProperty({
-        description: "Programs to create (all or none)",
+        description: "Programs to create",
         type: () => [CreateProgramDto]
     })
     @IsArray()

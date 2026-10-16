@@ -12,12 +12,12 @@ export class CreateProgramDto {
     @MinLength(3)
     name: string;
 
-    @ApiProperty({ example: "SIS", description: "Program's code, 3 to 6 uppercase letters (unique)" })
+    @ApiProperty({ example: "SIS", description: "Program's code, 3 to 6 uppercace letters (unique)" })
     @IsString()
     @Matches(/^[A-Z]{3,6}$/)
     code: string;
 
-    @ApiProperty({ example: 160, description: "Program's credits", minimum: 1 })
+    @ApiProperty({ example: 160, description: "Programs credits", minimum: 1 })
     @IsInt()
     @IsPositive()
     credits: number;
